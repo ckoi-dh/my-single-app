@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(cd frontend:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(unzip:*)",
+      "Bash(tree:*)",
+      "Bash(cd:*)",
+      "Bash(npm run:*)",
+      "Bash(./mvnw clean:*)"
+    ]
+  }
+}

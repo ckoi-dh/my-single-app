@@ -1,0 +1,71 @@
+# ========================================
+# 1. 前端目录忽略 (Node.js / Vue / Vite)
+# ========================================
+# 依赖包
+frontend/node_modules/
+# Vite 生产编译产物
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+# 本地环境变量（包含敏感配置，严禁提交）
+frontend/.env.local
+frontend/.env.*.local
+# npm/yarn/pnpm 日志
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+# 编辑器生成的本地缓存
+frontend/.eslintcache
+
+# ========================================
+# 2. 后端目录忽略 (Java / Spring Boot / Maven)
+# ========================================
+# 编译输出目录
+backend/target/
+# 编译后的字节码文件
+*.class
+# 打包文件
+*.jar
+*.war
+*.ear
+*.nar
+# 运行日志
+*.log
+# Maven 包装器产生的无用 jar（保留 mvnw 脚本即可）
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# ========================================
+# 3. IDE 与编辑器缓存 (IDEA / VS Code)
+# ========================================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+# VS Code (通常保留 tasks.json/launch.json，忽略个人的工作区设置)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ========================================
+# 4. 操作系统产生的缓存文件
+# ========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ========================================
+# 5. Claude Code CLI 相关缓存 (如果有)
+# ========================================
+# 保留 CLAUDE.md 和通用配置，但忽略可能包含本地 Token 或日志的缓存文件
+.claude/*.log
+.claude/mcp.log
