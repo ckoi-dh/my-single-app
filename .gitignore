@@ -67,5 +67,5 @@ $RECYCLE.BIN/
 # 5. Claude Code CLI 相关缓存 (如果有)
 # ========================================
 # 保留 CLAUDE.md 和通用配置，但忽略可能包含本地 Token 或日志的缓存文件
-.claude/*.log
-.claude/mcp.log
+.claude/
+!.claude/README.md
