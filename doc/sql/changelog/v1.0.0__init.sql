@@ -1,0 +1,38 @@
+-- =============================================
+-- Changelog: v1.0.0
+-- 变更日志：v1.0.0
+-- =============================================
+-- Version: 1.0.0
+-- Date: 2026-03-18
+-- Description: Initialize database schema
+-- =============================================
+
+USE app_ckoi;
+
+-- =============================================
+-- demo table
+-- demo 表
+-- =============================================
+
+-- Create demo table
+-- 创建 demo 表
+CREATE TABLE IF NOT EXISTS demo (
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT 'Demo ID',
+  name VARCHAR(64) NOT NULL COMMENT 'Demo name',
+  description VARCHAR(512) NULL COMMENT 'Demo description',
+  status TINYINT NOT NULL DEFAULT 1 COMMENT 'Demo status (0-inactive, 1-active)',
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Create time',
+  update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update time',
+  deleted TINYINT NOT NULL DEFAULT 0 COMMENT 'Deleted flag (0-not deleted, 1-deleted)',
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_name (name),
+  KEY idx_status (status),
+  KEY idx_create_time (create_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Demo table';
+
+-- Insert test data
+-- 插入测试数据
+INSERT IGNORE INTO demo (name, description, status) VALUES
+  ('Demo 1', 'This is the first demo', 1),
+  ('Demo 2', 'This is the second demo', 1),
+  ('Demo 3', 'This is the third demo', 0);

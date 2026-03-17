@@ -15,9 +15,11 @@
 
 - 本项目是前后端分离 Monorepo。
 - **前端技术栈**: Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Axios + Prettier + ESLint
-- **后端技术栈**: Java 17 + Spring Boot 2.7.18 + MyBatis-Plus + MySQL + Druid + MapStruct + Lombok + Spring Security + JJWT
+- **后端技术栈**: Java 17 + Spring Boot 2.7.18 + MyBatis-Plus + MySQL + Druid + MapStruct + Lombok + Spring Security +
+  JJWT
 - **子目录规范**: `backend/` 和 `frontend/` 目录下各自有更详细的 CLAUDE.md 开发规范
 - 所有接口响应统一使用 `{ code: 200, message: "success", data: { ... } }` 结构。
+- 规范性的项目变更，需要同步更新对应的 CLAUDE.md 文件
 
 ## 3. 项目快速启动 (Quick Start)
 
@@ -26,7 +28,7 @@
 
 ## 4. 沟通与语言学习策略 (Communication & Language Learning)
 
-- **对话与解释**：请使用中文与我进行日常探讨、原理解释和错误排查。
+- **对话与解释**：请使用中文与我进行日常探讨、原理解释和错误排查；若需求描述不够清晰、或现有方案存在明显缺陷，不得强行执行，必须先提出疑问并确认后再动手。。
 - **专业词汇**：在中文解释中，请尽量保留行业标准的英文原词（如 Component, Dependency Injection, Middleware）。
 - **代码注释 (Code Comments)**：
     - 代码中的所有注释，必须强制使用**最基础、最简单的英文短句 (Basic, simple English)**，多用动词开头的祈使句（如
