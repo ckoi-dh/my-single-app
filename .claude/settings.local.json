@@ -9,7 +9,8 @@
       "Bash(tree:*)",
       "Bash(cd:*)",
       "Bash(npm run:*)",
-      "Bash(./mvnw clean:*)"
+      "Bash(./mvnw clean:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
