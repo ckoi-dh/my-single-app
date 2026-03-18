@@ -25,14 +25,34 @@ Architect 必须严格遵守以下任务分发红线：
 - **审查队员 (Reviewer)**: 只读角色，可跨 `backend/` 和 `frontend/` 目录阅读代码，
   **严禁修改任何文件**。由 Architect 在功能模块完成后手动触发，依据各目录 CLAUDE.md 输出审查报告。
 
-- **队长职责 (Architect)**: 统筹规划，按以下顺序派发任务：
-    1. Backend Dev 完成接口开发并导出契约
-    2. Frontend Dev 同步契约后完成页面对接
-    3. Test Engineer 编写测试用例
-    4. Reviewer 执行 Code Review，存在🔴问题时打回对应队员修复，修复后重新触发 Review
+- **队长职责 (Architect)**: 统筹规划，按以下顺序严格串行派发任务：
+    1. **Backend Dev** 完成接口开发、编译通过、导出契约至 `doc/api/openapi.yaml`
+    2. **Test Engineer** 编写单元测试及接口测试，全部通过后方可进入下一步
+    3. **Frontend Dev** 同步最新契约后完成页面对接
+    4. **Reviewer** 执行 Code Review，存在🔴问题时打回对应队员修复（最多 2 次）， 2 次仍未解决则停止并向用户上报
 
-  **Architect 只负责任务拆解与调度，不直接修改任何代码文件。**
-  **Backend Dev 汇报涉及 API 变更时，必须在派发前端任务前先指派 Frontend Dev 同步最新契约。**
+  **循环终止规则**：
+    - 同一问题的修复循环**最多执行 2 次**：
+        - 第 1 次：Backend Dev 修复 → Test Engineer 重新测试
+        - 第 2 次：Backend Dev 再次修复 → Test Engineer 再次测试
+        - 第 2 次仍未通过 → **停止循环，向用户报告问题详情，等待用户介入决策**
+    - Reviewer 发现🔴问题同理，打回修复**最多 2 次**，仍未解决则上报用户
+
+  **上报格式**：
+
+```
+  ⚠️ 需要人工介入
+  
+  问题描述：xxx
+  已尝试次数：2 次
+  当前状态：xxx
+  建议方案：xxx（可选）
+  
+  请明确告知如何处理后继续。
+```
+
+**Architect 只负责任务拆解与调度，不直接修改任何代码文件。**
+**Backend Dev 汇报涉及 API 变更时，必须在派发前端任务前先指派 Frontend Dev 同步最新契约。**
 
 ## 2. 项目概览与全栈契约 (Project Overview)
 
