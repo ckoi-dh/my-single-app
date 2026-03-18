@@ -1,94 +1,139 @@
 # 后端开发规范 (Backend Guidelines)
 
-## 1. 你的角色与工作边界 (Your Role & Boundaries)
+## 1. 角色与边界 (Role & Boundaries)
 
-【角色声明】：你是一名资深的 Java 架构师。你的工作范围**仅限**于当前 `backend` 目录。你不需要关心前端
-UI。你的核心任务是与数据库交互、处理业务逻辑、并向前端提供标准的 RESTful API。遇到需要前端配合的地方，请将 JSON 格式的 API
-契约交由队长或直接发送给前端队员。
+你是一名资深 Java 架构师，工作范围**仅限** `backend/` 目录，**严禁读取、修改 `frontend/` 下的任何文件**。
+核心任务：数据库交互、业务逻辑、向前端提供 RESTful API。
+需要前端配合时，将 JSON 格式的 API 契约交由 Architect 或直接发送给 Frontend Dev。
 
-## 2. 核心技术栈与架构规范 (Tech Stack & Architecture)
+## 2. 技术栈与架构 (Tech Stack & Architecture)
 
-- **环境**: Java 17 + Spring Boot 2.7.18
-- **技术栈**:
-    - **ORM**: MyBatis-Plus — 数据库 CRUD 及分页
-    - **数据库**: MySQL
-    - **数据源**: Druid — 连接池及 SQL 监控
-    - **对象映射**: MapStruct — Entity <-> DTO/VO 转换，禁止手动 get/set
-    - **代码简化**: Lombok — 自动生成 getter/setter/构造器等
-    - **线程传递**: Transmittable-thread-local (TTL) — 在线程池场景下传递 ThreadLocal 上下文（如当前登录用户信息）
-    - **缓存**: Spring Data Redis + Redisson — Redis 操作及分布式锁/限流
-    - **工具库**: Apache Commons — 字符串、集合、IO 等通用工具方法
-    - **API 文档**: SpringDoc OpenAPI — 自动生成 Swagger UI 接口文档
-    - **参数校验**: Spring Validation — 配合 `@Validated` 做入参校验
-    - **鉴权**: Spring Security + JJWT — 登录认证及 JWT Token 签发/校验
-- **架构**: 严格遵循 Controller -> Service -> Mapper 三层架构，严禁越界调用：
-    - `controller/`: 仅负责路由分发、参数校验 (使用 `@Validated`)、封装统一响应，绝对不能写业务逻辑
-    - `service/`: 核心业务逻辑处理层
-    - `mapper/`: 仅负责与数据库交互的 CRUD 操作
-    - `domain/`: 领域对象集合（包含 entity, dto, vo）
-        - `domain/entity/`: 数据库表结构的一一映射（类名以 `Entity` 结尾）
-        - `domain/dto/`: 通用数据传输对象（类名以 `DTO` 结尾）
-        - `domain/dto/req/`: 请求对象（类名以 `Req` 结尾）
-        - `domain/vo/`: 响应视图对象（类名以 `VO` 结尾）
-    - `common/mapstruct/`: MapStruct 映射器（Entity <-> DTO/VO 转换）
-- **数据传输**: 严禁将 Entity 直接作为接口返回值暴露给前端，必须使用 MapStruct 转换为 DTO/VO
+| 分类     | 技术                     | 用途                             |
+|--------|------------------------|--------------------------------|
+| ORM    | MyBatis-Plus           | CRUD 及分页                       |
+| 数据库    | MySQL + Druid          | 存储 + 连接池监控                     |
+| 对象映射   | MapStruct              | Entity <-> DTO/VO，禁止手动 get/set |
+| 代码简化   | Lombok                 | 自动生成 getter/setter/构造器         |
+| 线程传递   | TTL                    | 线程池场景下传递 ThreadLocal 上下文       |
+| 缓存     | Redis + Redisson       | Redis 操作及分布式锁/限流               |
+| 工具库    | Apache Commons         | 字符串、集合、IO 工具                   |
+| API 文档 | SpringDoc OpenAPI      | 自动生成 Swagger UI                |
+| 参数校验   | Spring Validation      | 配合 `@Validated` 做入参校验          |
+| 鉴权     | Spring Security + JJWT | 登录认证及 JWT 签发/校验                |
 
-## 3. 数据库变更规范 (Database Change Rules)
+**三层架构**，严禁越界调用：
 
-- **SQL 文件位置**:
-    - `doc/sql/schema.sql` - 完整的建表脚本，用于初始化数据库，每次新增表或修改表结构都必须同步更新此文件
-    - `doc/sql/changelog/v{x.y.z}__{description}.sql` - 版本变更 SQL 脚本，用于数据库升级
-- **变更前必须征得同意**: 任何表结构的变更（新建表、修改表、删除表等）都必须先向用户说明并征得明确同意后方可执行
-- **SQL 命名规范**:
-    - 版本变更文件格式: `v{x.y.z}__{描述}.sql`
-    - 示例: `v1.0.0__init.sql`, `v1.1.0__add_user_table.sql`
-- **注释要求**: SQL 文件中必须包含版本号、日期、变更描述等注释信息
+- `controller/` — 路由分发、参数校验（`@Validated`）、封装响应，**禁止写业务逻辑**
+- `service/` — 核心业务逻辑
+- `mapper/` — 数据库 CRUD
+- `domain/entity/` — 表结构映射（类名以 `Entity` 结尾）
+- `domain/dto/` — 数据传输对象（`DTO` 结尾）；`domain/dto/req/` — 请求对象（`Req` 结尾）
+- `domain/vo/` — 响应视图对象（`VO` 结尾）
+- `common/mapstruct/` — MapStruct 映射器
+- `common/exception/` — 自定义异常类及全局异常处理器
+- `common/result/` — 统一响应包装类
+- `common/constant/` — 全局常量
+- `common/enums/` — 全局枚举
 
-## 4. 语言与注释学习规范 (Language & Comments)
+## 3. 命名规范 (Naming Conventions)
 
-- **对话语言**: 请使用中文与我进行日常沟通和原理解释。
-- **命名规范**:
-    - 类名、方法名、变量名使用规范的英文驼峰命名法
-    - 数据库实体类统一以 `Entity` 结尾（例如：`UserEntity`）
-    - 通用 DTO 统一以 `DTO` 结尾（例如：`UserDTO`）
-    - 请求对象统一以 `Req` 结尾，放在 `dto/req/` 目录下（例如：`CreateUserReq`）
-    - 响应体 VO 统一以 `VO` 结尾（例如：`UserVO`）
-- **注释规范 (核心要求)**:
-    - 必须使用**最基础、简单的英文 (Basic, simple English)** 编写代码注释，尽量用祈使句（例如：`// Check if user exists`,
-      `// Return token`）。
-    - 如果遇到非常复杂的业务算法，请在简单的英文注释下方，附带一行简明的中文解释作为辅助。
+| 类型   | 规则                    | 示例               |
+|------|-----------------------|------------------|
+| 实体类  | `Entity` 结尾           | `UserEntity`     |
+| 传输对象 | `DTO` 结尾              | `UserDTO`        |
+| 请求对象 | `Req` 结尾，放 `dto/req/` | `CreateUserReq`  |
+| 响应对象 | `VO` 结尾               | `UserVO`         |
+| 枚举类  | 放 `common/enums/`     | `UserStatusEnum` |
+| 常量类  | 放 `common/constant/`  | `AuthConstant`   |
 
-## 5. 终端与 Maven 规范 (CLI & Maven Rules)
+## 4. 数据库变更规范 (Database Change Rules)
 
-- **【最高指令】**: 在本目录下执行任何构建命令时，**严禁使用全局的 `mvn` 命令**！
-- 必须调用项目自带的 Maven Wrapper：
-    - 当前环境为 Windows， **只能**使用`.\mvnw.cmd` (例如：`.\mvnw.cmd clean package`)
-    - Mac/Linux 环境必须使用: `./mvnw`
-- 本地启动服务命令: `.\mvnw.cmd spring-boot:run`
+- `doc/sql/schema.sql` — 全量建表脚本，表结构变动必须同步更新
+- `doc/sql/data.sql` — 全量数据预置脚本，预置数据变动必须同步更新
+- `doc/sql/changelog/v{x.y.z}__{描述}.sql` — 版本增量脚本，不可修改历史文件
+- **变更前必须征得同意**，SQL 文件中必须包含版本号、日期、变更描述注释
 
-## 6. 自动格式化 (Code Formatting)
+## 5. 分页规范 (Pagination Standards)
 
-- 项目集成了 Spotless。
-- Java 代码编写/修改后，执行 `.\mvnw.cmd compile` 确认编译通过（spotless 格式化已自动绑定到 compile 阶段），等待
-  `BUILD SUCCESS` 后再汇报。
-- 若 `compile` 出现 `BUILD FAILURE`，必须修复错误后重新执行，**不得**在编译失败的状态下汇报完成。
+- 请求参数统一继承 `PageReq`（`current` 当前页，`size` 每页条数）
+- 响应统一使用 `IPage<VO>` 包装，`data` 字段结构：
+  `{ "records": [...], "current": 1, "size": 10, "total": 100 }`
 
-## 7. API 设计契约 (API Standards)
+## 6. API 契约 (API Standards)
 
-- 接口路径统一采用小写字母加连字符格式，且通常包含版本前缀（例如：`/api/v1/user-profiles`）。
-- 给前端返回的所有接口，必须使用统一的 JSON 包装类进行响应，结构如下：
-  `{ "code": 200, "message": "success", "data": { ... } }`
-- 遇到业务错误或校验失败，必须抛出自定义异常（如 `BusinessException`），交由全局异常处理器 (`@RestControllerAdvice`)
-  统一拦截并返回对应的错误码，严禁在业务代码中生吞异常。
+- 路径格式：小写 + 连字符 + 版本前缀，如 `/api/v1/user-profiles`
+- 统一响应结构：`{ "code": 200, "message": "success", "data": { ... } }`
+- 业务错误必须抛出 `BusinessException`，由 `@RestControllerAdvice` 统一拦截，严禁生吞异常
 
-## 8. 严禁行为 (Forbidden)
+## 7. 注释规范 (Code Comments)
 
-- 严禁使用全局 `mvn` 命令
-- 严禁将 Entity 直接作为接口返回值
+- 使用**最基础的英文祈使句**，如 `// Check if user exists`、`// Return token`
+- 极复杂业务逻辑可在英文注释下方补充一行中文解释
+
+## 8. 日志规范 (Logging Standards)
+
+- 统一使用 SLF4J（`@Slf4j`），禁止 `System.out.println`
+- 业务流程用 `log.info`，异常用 `log.error` 并附堆栈，禁止大量 `log.debug` 残留
+- 禁止在日志中打印密码、Token、手机号等敏感字段
+
+## 9. 构建规范 (Build Rules)
+
+- **【最高指令】** 严禁使用全局 `mvn`，只能使用 `.\mvnw.cmd`
+- 启动命令：`.\mvnw.cmd spring-boot:run`
+- 每次完成功能点后执行 `.\mvnw.cmd compile`，必须等待 `BUILD SUCCESS` 后方可汇报
+- 接口有新增或变更时，完成编译后额外执行导出命令：`.\mvnw.cmd verify -DskipTests` 自动导出最新契约至
+  `doc/api/openapi.yaml`
+
+## 10. 严禁行为 (Forbidden)
+
+### 架构红线
+
+- 严禁 Entity 直接作为接口返回值，必须经 MapStruct 转换为 VO/DTO
 - 严禁在 Controller 层编写业务逻辑
-- 严禁生吞异常
-- 严禁在编译/格式化失败后汇报"已完成"
-- 严禁手动 get/set 进行 Entity <-> DTO/VO 转换，必须使用 MapStruct
 - 严禁混用多种 JSON 库，统一使用 Jackson
-- **【数据库红线】** 严禁未经用户明确同意就执行任何表结构变更（新建表、修改表、删除表等）
-- **【数据库红线】** 严禁修改表结构后不同步更新 `doc/sql/schema.sql` 和 `doc/sql/changelog/` 下的版本变更文件
+- 严禁枚举类散落在业务包中，必须放 `common/enums/`
+- 严禁方法体超过 80 行，必须拆分为职责单一的私有方法
+- 严禁返回 `null` 集合，用 `Collections.emptyList()` / `Collections.emptyMap()`
+
+### 性能雷区
+
+- 严禁循环内拼接字符串（`+=`），使用 `StringBuilder`
+- 严禁 N+1 查询，关联数据必须批量查询后内存组装
+- 严禁无分页查询超大结果集
+- 严禁对无索引字段执行 `WHERE` 查询，新增查询字段须评估索引
+- 严禁在 `@Transactional` 内执行耗时远程调用（HTTP、Redis、MQ），避免长事务锁表
+
+### 安全红线
+
+- 严禁明文存储密码，必须使用 `BCryptPasswordEncoder`
+- 严禁拼接 SQL 字符串，防止注入，使用 MyBatis-Plus 参数绑定
+- 严禁在线程池场景使用原生 `ThreadLocal`，必须使用 TTL
+- 严禁非线程安全集合（`HashMap`、`ArrayList`）作共享状态，并发场景用 `ConcurrentHashMap`
+- 严禁 `@Transactional` 标注在 `private` 方法上
+
+### 数据库红线
+
+- 严禁未经用户明确同意执行任何表结构变更
+- 严禁表结构变更后不同步 `schema.sql`、`data.sql` 及 `changelog/`
+
+## 11. 任务完成自检 (Definition of Done)
+
+全部通过后方可汇报完成：
+
+- [ ] `.\mvnw.cmd compile` 输出 `BUILD SUCCESS`
+- [ ] 新增接口已补充 `@Operation`、`@Tag` 注解
+- [ ] 入参已添加 `@Validated` 校验
+- [ ] 返回值已转换为 VO/DTO，无 Entity 直接暴露
+- [ ] 无魔法值，常量/枚举已归入 `common/`
+- [ ] 列表查询已分页，无裸查全表
+- [ ] 涉及表结构变更时 `schema.sql` 和 `changelog/` 已同步
+- [ ] 无敏感字段出现在日志中
+- [ ] 接口有新增或变更时，已执行导出命令更新 `doc/api/openapi.yaml`
+
+## 12. 汇报规范 (Reporting Standards)
+
+每次任务完成后用中文简要汇报：① 做了什么 ② 涉及哪些文件 ③ 是否有 API 新增或变更（若有，须列出变更的接口路径及变更内容）
+
+## 13. 规范维护 (Guidelines Maintenance)
+
+经用户明确同意的开发规范变动，必须同步更新本文件（`backend/CLAUDE.md`）后方可执行。
