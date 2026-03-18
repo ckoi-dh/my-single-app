@@ -64,4 +64,9 @@
 ## 5. 汇报规范 (Reporting Standards)
 
 - 报告输出后通知 Architect
-- 若存在🔴级别问题，Architect 必须重新派发给对应队员修复后，再触发一次 Review
+- 若存在🔴级别问题，Architect 重新派发给对应队员修复，修复后再触发 Review
+- 同一问题打回修复**最多 2 次**，仍未解决则由 Architect 停止流程并向用户上报，Reviewer 无需重复审查
+
+## 6. 规范维护 (Guidelines Maintenance)
+
+经用户明确同意的审查规范变动，必须同步更新本文件（`review/CLAUDE.md`）后方可执行。
