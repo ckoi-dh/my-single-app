@@ -69,3 +69,4 @@ $RECYCLE.BIN/
 # 保留 CLAUDE.md 和通用配置，但忽略可能包含本地 Token 或日志的缓存文件
 .claude/
 !.claude/README.md
+!.claude/settings.json
