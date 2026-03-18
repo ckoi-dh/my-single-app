@@ -2,16 +2,37 @@
 
 ## 1. 团队协作与角色划分 (Agent Team Rules)
 
-如果启用了 Agent Team 模式，队长（Architect）必须严格遵守以下任务分发红线：
+**模式判断**：
+
+- 在**根目录**启动 Claude Code → 自动进入 Agent Team 模式，Architect 负责统筹调度
+- 在**子目录**（`backend/`、`frontend/` 等）启动 Claude Code → 单 Agent 模式，
+  直接按该目录的 CLAUDE.md 规范独立完成任务，无需角色分工
+
+---
+
+Architect 必须严格遵守以下任务分发红线：
 
 - **后端队员 (Backend Dev)**: 只能分配到 `backend/` 目录工作。负责查阅 `doc/` 下的需求，设计数据库表，并优先输出
-  RESTful API，完成后需将 API 契约同步更新至 `doc/api/` 目录。**严禁修改任何前端文件。**
-- **前端队员 (Frontend Dev)**: 只能分配到 `frontend/` 目录工作。必须等待后端确定 API 契约（`doc/api/`）后，再进行页面和接口对接开发，以
-  `doc/api/` 为唯一对接依据，严禁自行捏造数据字段。**严禁修改任何后端或数据库文件。**
-- **队长职责 (Architect)**: 统筹规划按顺序派发任务。在开发前引导队员读取`doc/` 目录下的 PRD 或原型图。**Architect
-  只负责任务拆解与调度，不直接修改任何代码文件，所有代码变更必须通过 Backend Dev 或 Frontend Dev 执行。**
-    - Backend Dev 汇报涉及 API 变更时，Architect 必须在派发下一个任务前，先指派 Frontend Dev 同步最新契约（执行
-      openapi-typescript）
+  RESTful API，完成后需将 API 契约同步导出至 `doc/api/openapi.yaml`。**严禁修改任何前端文件。**
+
+- **前端队员 (Frontend Dev)**: 只能分配到 `frontend/` 目录工作。必须等待后端导出最新契约（`doc/api/openapi.yaml`）后，
+  执行 `npx openapi-typescript` 同步类型，再进行页面和接口对接开发。
+  **严禁修改任何后端或数据库文件。**
+
+- **测试队员 (Test Engineer)**: 工作范围仅限 `backend/src/test/`，在 Backend Dev完成功能并编译通过后触发，负责编写后端单元测试和
+  API 接口测试。**严禁修改任何业务代码。详细规范见 `test/CLAUDE.md`。**
+
+- **审查队员 (Reviewer)**: 只读角色，可跨 `backend/` 和 `frontend/` 目录阅读代码，
+  **严禁修改任何文件**。由 Architect 在功能模块完成后手动触发，依据各目录 CLAUDE.md 输出审查报告。
+
+- **队长职责 (Architect)**: 统筹规划，按以下顺序派发任务：
+    1. Backend Dev 完成接口开发并导出契约
+    2. Frontend Dev 同步契约后完成页面对接
+    3. Test Engineer 编写测试用例
+    4. Reviewer 执行 Code Review，存在🔴问题时打回对应队员修复，修复后重新触发 Review
+
+  **Architect 只负责任务拆解与调度，不直接修改任何代码文件。**
+  **Backend Dev 汇报涉及 API 变更时，必须在派发前端任务前先指派 Frontend Dev 同步最新契约。**
 
 ## 2. 项目概览与全栈契约 (Project Overview)
 

@@ -20,6 +20,9 @@
 | API 文档 | SpringDoc OpenAPI      | 自动生成 Swagger UI                |
 | 参数校验   | Spring Validation      | 配合 `@Validated` 做入参校验          |
 | 鉴权     | Spring Security + JJWT | 登录认证及 JWT 签发/校验                |
+| 单元测试   | JUnit 5 + Mockito      | Service / Mapper 层测试           |
+| 接口测试   | MockMvc                | Controller 层 API 测试            |
+| 断言库    | AssertJ                | 流式断言                           |
 
 **三层架构**，严禁越界调用：
 
@@ -128,11 +131,13 @@
 - [ ] 列表查询已分页，无裸查全表
 - [ ] 涉及表结构变更时 `schema.sql` 和 `changelog/` 已同步
 - [ ] 无敏感字段出现在日志中
+- [ ] 已整理本次新增/修改的 Service 方法清单，准备在汇报中列出
 - [ ] 接口有新增或变更时，已执行导出命令更新 `doc/api/openapi.yaml`
 
 ## 12. 汇报规范 (Reporting Standards)
 
-每次任务完成后用中文简要汇报：① 做了什么 ② 涉及哪些文件 ③ 是否有 API 新增或变更（若有，须列出变更的接口路径及变更内容）
+每次任务完成后用中文简要汇报：① 做了什么 ② 涉及哪些文件 ③ 是否有 API 新增或变更（若有，须列出变更的接口路径及变更内容）④
+本次新增/修改的 Service 方法清单（供 Test Engineer 使用）
 
 ## 13. 规范维护 (Guidelines Maintenance)
 
