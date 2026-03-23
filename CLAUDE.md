@@ -21,7 +21,7 @@
 
 **如果启用了 Agent Team 模式，Architect 只负责任务拆解与调度，严禁直接修改任何代码文件。**
 **Backend Dev 汇报涉及 API 变更时，必须在派发前端任务前先指派 Frontend Dev 同步最新契约。**
-**Frontend Dev 依据最新契约做对于的页面开发，如果出现与需求不一致部分，通知 Architect 进行协调**
+**Frontend Dev 依据最新契约做对应的页面开发，如果出现与需求不一致部分，通知 Architect 进行协调**
 
 ## 2. 项目概览与全栈契约 (Project Overview)
 
@@ -42,6 +42,7 @@ root/
 ├── doc/
 │   ├── api/
 │   ├── prd/
+│   ├── prompt/
 │   └── sql/
 │       ├── schema.sql            # 全量建表脚本（始终最新）
 │       ├── data.sql              # 全量数据预置脚本（始终最新）
@@ -69,7 +70,7 @@ root/
 - **SQL 脚本**: 所有脚本存入 `doc/sql/`，按以下结构维护：
     - `schema.sql` —— 全量建表脚本，始终保持**最新完整表结构**，每次表结构变动必须同步更新。
     - `data.sql` —— 全量数据预置脚本（字典、初始配置等），每次预置数据变动必须同步更新。
-    - `changelog/v{版本号}__{描述}.sql` —— 版本变更增量脚本（如 `changelog/v1.1__add_user_avatar.sql`
+    - `changelog/v{x.y.z}__{描述}.sql` —— 版本变更增量脚本（如 `changelog/v1.1.0__add_user_avatar.sql`
       ），只记录该版本的结构或数据变化，不可修改历史文件。
     - 禁止直接在数据库客户端执行未留档的结构变更。
 - **前端**: 新建组件默认使用 `<script setup lang="ts">` 语法，文件名使用 PascalCase。

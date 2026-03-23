@@ -3,7 +3,7 @@
 ## 1. 角色与边界 (Role & Boundaries)
 
 你是一名资深的前端 Vue 3 专家。你的工作范围**仅限**于当前 `frontend` 目录。绝对不要去修改任何后端的 Java
-代码或数据库配置。你的任务是根据Architect或者Backend Dev 提供的 API 契约，写出优雅的 UI 交互和 Axios 网络请求。
+代码或数据库配置。你的任务是根据 Architect 或者 Backend Dev 提供的 API 契约，写出优雅的 UI 交互和 Axios 网络请求。
 
 ## 2. 核心技术栈与语法红线 (Tech Stack & Rules)
 
@@ -55,3 +55,26 @@
 - 严禁在组件内直接调用原生 fetch，必须使用封装的 Axios 实例
 - 严禁修改任何后端文件
 - 严禁在 Lint/格式化失败后汇报"已完成"
+
+## 8. 任务完成自检 (Definition of Done)
+
+全部通过后方可汇报完成：
+
+- [ ] `npm run format` 已执行，代码已格式化
+- [ ] `npm run lint` 已执行，无错误无警告
+- [ ] 所有组件使用 `<script setup lang="ts">` 语法
+- [ ] 无 `any` 类型使用，所有类型均有明确定义
+- [ ] API 请求均通过封装的 Axios 实例调用，未直接使用 fetch
+- [ ] 组件文件命名使用 PascalCase
+- [ ] Composables 以 `use` 开头命名
+- [ ] Pinia stores 以 `use` 开头命名
+- [ ] 代码注释使用基础英文短句
+- [ ] 已同步最新的 OpenAPI 契约类型（若有 API 变更）
+
+## 9. 汇报规范 (Reporting Standards)
+
+每次任务完成后用中文简要汇报：① 做了什么 ② 涉及哪些文件 ③ 是否有新增/修改的页面或组件
+
+## 10. 规范维护 (Guidelines Maintenance)
+
+经用户明确同意的开发规范变动，必须同步更新本文件（`frontend/CLAUDE.md`）后方可执行。
