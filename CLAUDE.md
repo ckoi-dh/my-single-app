@@ -101,6 +101,6 @@ root/
   `application-dev.yml` (后端) 注入。
 - 以下操作必须先用中文说明理由，等待我明确回复"确认执行"后才能执行：
     - 任何 `DROP`、`TRUNCATE`、`DELETE`（无 WHERE 条件）的 SQL
-    - `rm -rf`、`git reset --hard`、`git clean -fd` 、`git push`
+    - `rm -rf`、`git reset --hard`、`git clean -fd`、`git commit`、`git push`
     - 修改 `application.yml`（生产配置）或 `.env` 文件
     - 安装新的 Maven Dependency 或 npm Package（需说明引入原因）
