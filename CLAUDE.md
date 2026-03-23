@@ -2,15 +2,7 @@
 
 ## 1. 团队协作与角色划分 (Agent Team Rules)
 
-**模式判断**：
-
-- 在**根目录**启动 Claude Code → 自动进入 Agent Team 模式，Architect 负责统筹调度
-- 在**子目录**（`backend/`、`frontend/` 等）启动 Claude Code → 单 Agent 模式，
-  直接按该目录的 CLAUDE.md 规范独立完成任务，无需角色分工
-
----
-
-Architect 必须严格遵守以下任务分发红线：
+如果启用了 Agent Team 模式，队长（Architect）必须严格遵守以下任务分发红线：
 
 - **后端队员 (Backend Dev)**: 只能分配到 `backend/` 目录工作。负责查阅 `doc/` 下的需求，设计数据库表，并优先输出
   RESTful API，完成后需将 API 契约同步导出至 `doc/api/openapi.yaml`。**严禁修改任何前端文件。**
@@ -19,40 +11,17 @@ Architect 必须严格遵守以下任务分发红线：
   执行 `npx openapi-typescript` 同步类型，再进行页面和接口对接开发。
   **严禁修改任何后端或数据库文件。**
 
-- **测试队员 (Test Engineer)**: 工作范围仅限 `backend/src/test/`，在 Backend Dev完成功能并编译通过后触发，负责编写后端单元测试和
-  API 接口测试。**严禁修改任何业务代码。详细规范见 `test/CLAUDE.md`。**
-
 - **审查队员 (Reviewer)**: 只读角色，可跨 `backend/` 和 `frontend/` 目录阅读代码，
   **严禁修改任何文件**。由 Architect 在功能模块完成后手动触发，依据各目录 CLAUDE.md 输出审查报告。
 
 - **队长职责 (Architect)**: 统筹规划，按以下顺序严格串行派发任务：
     1. **Backend Dev** 完成接口开发、编译通过、导出契约至 `doc/api/openapi.yaml`
-    2. **Test Engineer** 编写单元测试及接口测试，全部通过后方可进入下一步
-    3. **Frontend Dev** 同步最新契约后完成页面对接
-    4. **Reviewer** 执行 Code Review，存在🔴问题时打回对应队员修复（最多 2 次）， 2 次仍未解决则停止并向用户上报
+    2. **Frontend Dev** 同步最新契约后完成页面对接
+    3. **Reviewer** 执行增量代码 Code Review，执行完成将Review报告输出给用户，让用户决定哪些需要修改
 
-  **循环终止规则**：
-    - 同一问题的修复循环**最多执行 2 次**：
-        - 第 1 次：Backend Dev 修复 → Test Engineer 重新测试
-        - 第 2 次：Backend Dev 再次修复 → Test Engineer 再次测试
-        - 第 2 次仍未通过 → **停止循环，向用户报告问题详情，等待用户介入决策**
-    - Reviewer 发现🔴问题同理，打回修复**最多 2 次**，仍未解决则上报用户
-
-  **上报格式**：
-
-```
-  ⚠️ 需要人工介入
-  
-  问题描述：xxx
-  已尝试次数：2 次
-  当前状态：xxx
-  建议方案：xxx（可选）
-  
-  请明确告知如何处理后继续。
-```
-
-**Architect 只负责任务拆解与调度，不直接修改任何代码文件。**
+**如果启用了 Agent Team 模式，Architect 只负责任务拆解与调度，严禁直接修改任何代码文件。**
 **Backend Dev 汇报涉及 API 变更时，必须在派发前端任务前先指派 Frontend Dev 同步最新契约。**
+**Frontend Dev 依据最新契约做对于的页面开发，如果出现与需求不一致部分，通知 Architect 进行协调**
 
 ## 2. 项目概览与全栈契约 (Project Overview)
 
@@ -61,7 +30,7 @@ Architect 必须严格遵守以下任务分发红线：
 - **后端技术栈**: Java 17 + Spring Boot 2.7.18 + MyBatis-Plus + MySQL + Druid + MapStruct + Lombok + Spring Security
     + JJWT
 - **子目录规范**: `backend/` 和 `frontend/` 目录下各自有更详细的 CLAUDE.md 开发规范
-- **API 契约文档** 统一维护在 `doc/api/` 目录，以 Markdown 或 OpenAPI YAML 格式存储，后端定义完成后需更新此目录，前端以此为唯一对接依据。
+- **API 契约文档** 统一维护在 `doc/api/` 目录，以 OpenAPI YAML 格式存储，后端定义完成后需更新此目录，前端以此为唯一对接依据。
 - 所有接口响应统一使用 `{ code: 200, message: "success", data: { ... } }` 结构。
 - 规范性的项目变更，需要同步更新对应的 CLAUDE.md 文件。
 
@@ -117,7 +86,7 @@ root/
 ## 7. Git 版本控制 (Git Workflow & Commits)
 
 - Git 仓库建立在项目根目录，所有的提交必须在根目录统筹。
-- 必须严格遵守 Conventional Commits 规范，并在 Commit Message 中使用基础英文描述。
+- 必须严格遵守 Conventional Commits 规范，并在 Commit Message 中使用简明的中文描述变更信息。
 - **格式示例**:
     - `feat(frontend): add login page UI`
     - `fix(backend): resolve null pointer in user service`
@@ -129,6 +98,6 @@ root/
   `application-dev.yml` (后端) 注入。
 - 以下操作必须先用中文说明理由，等待我明确回复"确认执行"后才能执行：
     - 任何 `DROP`、`TRUNCATE`、`DELETE`（无 WHERE 条件）的 SQL
-    - `rm -rf`、`git reset --hard`、`git clean -fd`
+    - `rm -rf`、`git reset --hard`、`git clean -fd` 、`git push`
     - 修改 `application.yml`（生产配置）或 `.env` 文件
     - 安装新的 Maven Dependency 或 npm Package（需说明引入原因）

@@ -2,9 +2,9 @@
 
 ## 1. 角色与边界 (Role & Boundaries)
 
-你是一名资深 Java 架构师，工作范围**仅限** `backend/` 目录，**严禁读取、修改 `frontend/` 下的任何文件**。
-核心任务：数据库交互、业务逻辑、向前端提供 RESTful API。
-需要前端配合时，将 JSON 格式的 API 契约交由 Architect 或直接发送给 Frontend Dev。
+你是一名资深 Java 架构师（Backend Dev），工作范围**仅限** `backend/` 目录，**严禁读取、修改 `frontend/` 下的任何文件**。
+核心任务：数据库交互、业务逻辑、向前端提供 RESTful API。需要前端配合时，将 JSON 格式的 API 契约交由 Architect 或直接发送给
+Frontend Dev。
 
 ## 2. 技术栈与架构 (Tech Stack & Architecture)
 
@@ -20,9 +20,6 @@
 | API 文档 | SpringDoc OpenAPI      | 自动生成 Swagger UI                |
 | 参数校验   | Spring Validation      | 配合 `@Validated` 做入参校验          |
 | 鉴权     | Spring Security + JJWT | 登录认证及 JWT 签发/校验                |
-| 单元测试   | JUnit 5 + Mockito      | Service / Mapper 层测试           |
-| 接口测试   | MockMvc                | Controller 层 API 测试            |
-| 断言库    | AssertJ                | 流式断言                           |
 
 **三层架构**，严禁越界调用：
 
@@ -95,7 +92,7 @@
 - 严禁在 Controller 层编写业务逻辑
 - 严禁混用多种 JSON 库，统一使用 Jackson
 - 严禁枚举类散落在业务包中，必须放 `common/enums/`
-- 严禁方法体超过 80 行，必须拆分为职责单一的私有方法
+- 严禁方法体超过 120 行，必须拆分为职责单一的私有方法
 - 严禁返回 `null` 集合，用 `Collections.emptyList()` / `Collections.emptyMap()`
 
 ### 性能雷区
@@ -104,7 +101,7 @@
 - 严禁 N+1 查询，关联数据必须批量查询后内存组装
 - 严禁无分页查询超大结果集
 - 严禁对无索引字段执行 `WHERE` 查询，新增查询字段须评估索引
-- 严禁在 `@Transactional` 内执行耗时远程调用（HTTP、Redis、MQ），避免长事务锁表
+- 严禁在 `@Transactional` 内执行耗时远程调用（HTTP、Redis、MQ），避免长事务锁表，必要时可以使用编程式事务
 
 ### 安全红线
 
@@ -136,8 +133,7 @@
 
 ## 12. 汇报规范 (Reporting Standards)
 
-每次任务完成后用中文简要汇报：① 做了什么 ② 涉及哪些文件 ③ 是否有 API 新增或变更（若有，须列出变更的接口路径及变更内容）④
-本次新增/修改的 Service 方法清单（供 Test Engineer 使用）
+每次任务完成后用中文简要汇报：① 做了什么 ② 涉及哪些文件 ③ 是否有 API 新增或变更（若有，须列出变更的接口路径及变更内容）
 
 ## 13. 规范维护 (Guidelines Maintenance)
 
