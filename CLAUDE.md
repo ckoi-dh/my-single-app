@@ -26,7 +26,7 @@
 ## 2. 项目概览与全栈契约 (Project Overview)
 
 - 本项目是前后端分离 Monorepo。
-- **前端技术栈**: Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Axios + Prettier + ESLint
+- **前端技术栈**: Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Tailwind CSS + pnpm + Axios + Prettier + ESLint
 - **后端技术栈**: Java 17 + Spring Boot 2.7.18 + MyBatis-Plus + MySQL + Druid + MapStruct + Lombok + Spring Security
     + JJWT
 - **子目录规范**: `backend/` 和 `frontend/` 目录下各自有更详细的 CLAUDE.md 开发规范
@@ -62,7 +62,7 @@ root/
 ## 4. 项目快速启动 (Quick Start)
 
 - **后端启动**: 进入 `backend/` 目录，执行 `.\mvnw.cmd spring-boot:run`
-- **前端启动**: 进入 `frontend/` 目录，执行 `npm run dev`
+- **前端启动**: 进入 `frontend/` 目录，执行 `pnpm dev`
 
 ## 5. 编码默认约定 (Coding Defaults)
 

@@ -14,7 +14,8 @@
     - **状态管理**: Pinia
     - **路由**: Vue Router 4
     - **网络请求**: Axios — 统一封装实例，禁止组件内直接调用原生 fetch
-    - **UI 组件库**: Element Plus — 管理端与用户端统一使用，通过 CSS 变量定制用户端主题风格
+    - **UI 组件库**: Element Plus + Tailwind CSS — 管理后台主要使用 Element Plus，配合 Tailwind 工具类进行精细调整；H5 移动端页面主要使用 Tailwind CSS 实现高度定制化
+    - **包管理器**: pnpm — 强制使用 pnpm，严禁使用 npm/yarn
     - **代码格式化**: Prettier + ESLint
 
 ## 3. 目录结构与组件规范 (Directory & Components)
@@ -44,8 +45,8 @@
 
 ## 6. 终端命令与自动格式化 (CLI & Auto-Formatting)
 
-- 启动开发环境: `npm run dev`
-- 代码编写/修改后，执行 `npm run format` 格式化，再执行 `npm run lint` 确认无报错，等待通过后再汇报。
+- 启动开发环境: `pnpm dev`
+- 代码编写/修改后，执行 `pnpm format` 格式化，再执行 `pnpm lint` 确认无报错，等待通过后再汇报。
 - 若出现 Lint 报错，必须修复后重新执行，**不得**在有报错的状态下汇报完成。
 
 ## 7. 严禁行为 (Forbidden)
@@ -60,8 +61,8 @@
 
 全部通过后方可汇报完成：
 
-- [ ] `npm run format` 已执行，代码已格式化
-- [ ] `npm run lint` 已执行，无错误无警告
+- [ ] `pnpm format` 已执行，代码已格式化
+- [ ] `pnpm lint` 已执行，无错误无警告
 - [ ] 所有组件使用 `<script setup lang="ts">` 语法
 - [ ] 无 `any` 类型使用，所有类型均有明确定义
 - [ ] API 请求均通过封装的 Axios 实例调用，未直接使用 fetch
