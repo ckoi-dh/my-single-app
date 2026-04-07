@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import com.example.demo.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -9,12 +11,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /** Spring Security configuration. Spring Security 配置类。 */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   /** Configure password encoder. 配置密码编码器。 */
   @Bean
@@ -35,6 +41,8 @@ public class SecurityConfig {
         // 允许公开访问这些端点
         .antMatchers(
             "/api/v1/demo/**",
+            "/api/v1/auth/login",
+            "/api/v1/auth/refresh",
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
@@ -45,6 +53,10 @@ public class SecurityConfig {
         // 其他所有请求需要认证
         .anyRequest()
         .authenticated();
+
+    // Add JWT filter before UsernamePasswordAuthenticationFilter
+    // 在用户名密码认证过滤器之前添加JWT过滤器
+    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

@@ -20,13 +20,31 @@ const mode = ref<'demo' | 'admin' | 'h5'>('demo')
             <h1 class="text-xl font-bold text-gray-800">Vue 3 + Element Plus + Tailwind</h1>
           </div>
           <div class="flex gap-2">
-            <button @click="mode = 'demo'" :class="[mode === 'demo' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700', 'px-3 py-1 rounded-md text-sm']">
+            <button
+              @click="mode = 'demo'"
+              :class="[
+                mode === 'demo' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700',
+                'px-3 py-1 rounded-md text-sm'
+              ]"
+            >
               Demo
             </button>
-            <button @click="mode = 'admin'" :class="[mode === 'admin' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700', 'px-3 py-1 rounded-md text-sm']">
+            <button
+              @click="mode = 'admin'"
+              :class="[
+                mode === 'admin' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700',
+                'px-3 py-1 rounded-md text-sm'
+              ]"
+            >
               管理后台
             </button>
-            <button @click="mode = 'h5'" :class="[mode === 'h5' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700', 'px-3 py-1 rounded-md text-sm']">
+            <button
+              @click="mode = 'h5'"
+              :class="[
+                mode === 'h5' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700',
+                'px-3 py-1 rounded-md text-sm'
+              ]"
+            >
               H5 页面
             </button>
           </div>
@@ -41,8 +59,16 @@ const mode = ref<'demo' | 'admin' | 'h5'>('demo')
         <div class="text-center mb-8">
           <div class="hero relative inline-block">
             <img :src="heroImg" class="mx-auto w-40" alt="" />
-            <img :src="vueLogo" class="absolute left-1/2 top-1/4 -translate-x-1/2 w-12 h-7" alt="Vue logo" />
-            <img :src="viteLogo" class="absolute left-1/2 top-3/4 -translate-x-1/2 w-10 h-6" alt="Vite logo" />
+            <img
+              :src="vueLogo"
+              class="absolute left-1/2 top-1/4 -translate-x-1/2 w-12 h-7"
+              alt="Vue logo"
+            />
+            <img
+              :src="viteLogo"
+              class="absolute left-1/2 top-3/4 -translate-x-1/2 w-10 h-6"
+              alt="Vite logo"
+            />
           </div>
           <h2 class="text-3xl font-bold text-gray-800 mt-6">混合使用架构演示</h2>
           <p class="text-gray-600 mt-3">点击上方按钮查看不同场景的实现</p>

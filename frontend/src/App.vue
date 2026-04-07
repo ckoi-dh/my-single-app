@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <div id="app">
-    <HelloWorld />
+    <RouterView />
   </div>
 </template>
+
+<style scoped></style>

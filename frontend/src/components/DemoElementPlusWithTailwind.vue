@@ -56,9 +56,13 @@ const handleDelete = (row: any) => {
         <el-table-column prop="email" label="邮箱" />
         <el-table-column prop="role" label="角色" width="120">
           <template #default="{ row }">
-            <span :class="row.role === '管理员'
-              ? 'px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs'
-              : 'px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs'">
+            <span
+              :class="
+                row.role === '管理员'
+                  ? 'px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs'
+                  : 'px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs'
+              "
+            >
               {{ row.role }}
             </span>
           </template>

@@ -48,10 +48,24 @@ const addToCart = (_product: any) => {
         <div class="flex items-center justify-between">
           <h1 class="text-xl font-bold text-gray-800">精选商品</h1>
           <div class="relative">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-gray-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
             </svg>
-            <span v-if="cartCount > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            <span
+              v-if="cartCount > 0"
+              class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+            >
               {{ cartCount }}
             </span>
           </div>
@@ -63,10 +77,25 @@ const addToCart = (_product: any) => {
     <div class="bg-white border-b border-gray-200">
       <div class="max-w-2xl mx-auto px-4 py-3">
         <div class="relative">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
           </svg>
-          <input type="text" placeholder="搜索商品..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+          <input
+            type="text"
+            placeholder="搜索商品..."
+            class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
         </div>
       </div>
     </div>
@@ -75,22 +104,43 @@ const addToCart = (_product: any) => {
     <main class="max-w-2xl mx-auto px-4 py-6">
       <div class="grid grid-cols-2 gap-4 mb-8">
         <button class="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium">全部商品</button>
-        <button class="bg-white text-gray-600 border border-gray-200 px-4 py-2 rounded-lg font-medium">手机</button>
-        <button class="bg-white text-gray-600 border border-gray-200 px-4 py-2 rounded-lg font-medium">笔记本</button>
-        <button class="bg-white text-gray-600 border border-gray-200 px-4 py-2 rounded-lg font-medium">耳机</button>
+        <button
+          class="bg-white text-gray-600 border border-gray-200 px-4 py-2 rounded-lg font-medium"
+        >
+          手机
+        </button>
+        <button
+          class="bg-white text-gray-600 border border-gray-200 px-4 py-2 rounded-lg font-medium"
+        >
+          笔记本
+        </button>
+        <button
+          class="bg-white text-gray-600 border border-gray-200 px-4 py-2 rounded-lg font-medium"
+        >
+          耳机
+        </button>
       </div>
 
       <div class="grid grid-cols-2 gap-4">
-        <div v-for="product in products" :key="product.id" class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+        <div
+          v-for="product in products"
+          :key="product.id"
+          class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+        >
           <div class="relative">
             <img :src="product.image" :alt="product.name" class="w-full h-36 object-cover" />
-            <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">{{ product.category }}</span>
+            <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">{{
+              product.category
+            }}</span>
           </div>
           <div class="p-3">
             <div class="text-sm text-gray-500 mb-1">{{ product.category }}</div>
             <h3 class="font-medium text-gray-800 mb-1">{{ product.name }}</h3>
             <div class="text-lg font-bold text-red-600">{{ product.price }}</div>
-            <button @click="addToCart(product)" class="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white text-sm py-2 rounded-lg transition-colors">
+            <button
+              @click="addToCart(product)"
+              class="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white text-sm py-2 rounded-lg transition-colors"
+            >
               加入购物车
             </button>
           </div>
