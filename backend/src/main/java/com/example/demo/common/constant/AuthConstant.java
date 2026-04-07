@@ -43,7 +43,8 @@ public class AuthConstant {
   public static final String JWT_EXPIRATION_PROPERTY = "jwt.expiration";
 
   /** Default JWT secret key. 默认JWT密钥。 */
-  public static final String DEFAULT_JWT_SECRET = "demo-app-secret-key";
+  public static final String DEFAULT_JWT_SECRET =
+      "demo-app-secret-key-for-development-purpose-only-which-is-at-least-256-bits";
 
   /** Default token expiration time (24 hours in milliseconds). 默认令牌过期时间（24小时）。 */
   public static final long DEFAULT_JWT_EXPIRATION = 24 * 60 * 60 * 1000L;

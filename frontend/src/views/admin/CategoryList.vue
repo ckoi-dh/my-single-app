@@ -8,7 +8,7 @@ const tableData = ref([])
 const total = ref(0)
 const dialogVisible = ref(false)
 const isEdit = ref(false)
-const dialogTitle = computed(() => isEdit.value ? '编辑分类' : '新增分类')
+const dialogTitle = computed(() => (isEdit.value ? '编辑分类' : '新增分类'))
 
 const categoryFormRef = ref<FormInstance>()
 const categoryForm = reactive({
@@ -121,8 +121,12 @@ onMounted(() => {
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" link size="small" :icon="Edit" @click="handleEdit(row)">编辑</el-button>
-            <el-button type="danger" link size="small" :icon="Delete" @click="handleDelete(row)">删除</el-button>
+            <el-button type="primary" link size="small" :icon="Edit" @click="handleEdit(row)"
+              >编辑</el-button
+            >
+            <el-button type="danger" link size="small" :icon="Delete" @click="handleDelete(row)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -141,7 +145,12 @@ onMounted(() => {
     </el-card>
 
     <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px">
-      <el-form ref="categoryFormRef" :model="categoryForm" :rules="categoryRules" label-width="100px">
+      <el-form
+        ref="categoryFormRef"
+        :model="categoryForm"
+        :rules="categoryRules"
+        label-width="100px"
+      >
         <el-form-item label="分类名称" prop="name">
           <el-input v-model="categoryForm.name" placeholder="请输入分类名称" />
         </el-form-item>

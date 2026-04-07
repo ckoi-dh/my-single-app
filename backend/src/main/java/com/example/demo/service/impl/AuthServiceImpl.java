@@ -1,9 +1,11 @@
 package com.example.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.demo.common.mapstruct.UserMapstruct;
 import com.example.demo.domain.dto.req.LoginReq;
 import com.example.demo.domain.entity.UserEntity;
 import com.example.demo.domain.vo.LoginVO;
+import com.example.demo.domain.vo.UserVO;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.AuthService;
@@ -23,6 +25,7 @@ public class AuthServiceImpl implements AuthService {
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
   private final JwtTokenUtil jwtTokenUtil;
+  private final UserMapstruct userMapstruct;
 
   @Override
   @Transactional(rollbackFor = Exception.class)
@@ -31,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
     // 根据用户名查找用户
     LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(UserEntity::getUsername, req.getUsername());
+
     UserEntity user = userMapper.selectOne(queryWrapper);
 
     if (user == null) {
@@ -47,10 +51,15 @@ public class AuthServiceImpl implements AuthService {
     // 生成令牌
     String token = jwtTokenUtil.generateToken(user);
 
+    // Convert user to VO
+    // 将用户实体转换为VO
+    UserVO userVO = userMapstruct.toVO(user);
+
     // Create login VO
     // 创建登录VO
     LoginVO loginVO = new LoginVO();
     loginVO.setToken(token);
+    loginVO.setUser(userVO);
 
     return loginVO;
   }

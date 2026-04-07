@@ -43,7 +43,7 @@ export const useArticleStore = defineStore('article', {
         keyword: params.keyword,
         categoryId: params.categoryId,
         tagId: params.tagId,
-        status: params.status,
+        status: params.status
       }
       try {
         this.loading = true

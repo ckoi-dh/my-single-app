@@ -4,13 +4,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.common.Result;
 import com.example.demo.domain.dto.req.DemoCreateReq;
 import com.example.demo.domain.dto.req.DemoUpdateReq;
+import com.example.demo.domain.entity.UserEntity;
 import com.example.demo.domain.vo.DemoVO;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.DemoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 /** Demo controller. Demo 控制器。 */
@@ -21,12 +24,38 @@ import org.springframework.web.bind.annotation.*;
 public class DemoController {
 
   private final DemoService demoService;
+  private final UserMapper userMapper;
+  private final PasswordEncoder passwordEncoder;
 
   /** Hello endpoint. Hello 接口。 */
   @Operation(summary = "Hello", description = "Say hello")
   @GetMapping("/hello")
   public Result<String> hello() {
     return Result.success("Hello, World!");
+  }
+
+  /**
+   * Reset default user passwords. 重置默认用户密码。 This is a temporary endpoint for development purposes.
+   * 仅用于开发阶段的临时接口。
+   */
+  @Operation(summary = "Reset passwords", description = "Reset admin and testuser passwords")
+  @PostMapping("/reset-passwords")
+  public Result<Void> resetPasswords() {
+    // Reset admin password to admin123
+    UserEntity admin = userMapper.selectById(1L);
+    if (admin != null) {
+      admin.setPassword(passwordEncoder.encode("admin123"));
+      userMapper.updateById(admin);
+    }
+
+    // Reset testuser password to user123
+    UserEntity testUser = userMapper.selectById(2L);
+    if (testUser != null) {
+      testUser.setPassword(passwordEncoder.encode("user123"));
+      userMapper.updateById(testUser);
+    }
+
+    return Result.success();
   }
 
   /** Create demo. 创建 Demo。 */

@@ -91,12 +91,7 @@ onMounted(() => {
 
             <!-- Comment Form -->
             <div class="bg-gray-50 rounded-lg p-4 mb-6">
-              <el-input
-                type="textarea"
-                :rows="4"
-                placeholder="写下你的评论..."
-                class="mb-4"
-              />
+              <el-input type="textarea" :rows="4" placeholder="写下你的评论..." class="mb-4" />
               <div class="flex justify-end">
                 <el-button type="primary">发表评论</el-button>
               </div>

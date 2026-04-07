@@ -8,7 +8,7 @@ const tableData = ref([])
 const total = ref(0)
 const dialogVisible = ref(false)
 const isEdit = ref(false)
-const dialogTitle = computed(() => isEdit.value ? '编辑标签' : '新增标签')
+const dialogTitle = computed(() => (isEdit.value ? '编辑标签' : '新增标签'))
 
 const tagFormRef = ref<FormInstance>()
 const tagForm = reactive({
@@ -115,8 +115,12 @@ onMounted(() => {
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" link size="small" :icon="Edit" @click="handleEdit(row)">编辑</el-button>
-            <el-button type="danger" link size="small" :icon="Delete" @click="handleDelete(row)">删除</el-button>
+            <el-button type="primary" link size="small" :icon="Edit" @click="handleEdit(row)"
+              >编辑</el-button
+            >
+            <el-button type="danger" link size="small" :icon="Delete" @click="handleDelete(row)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>

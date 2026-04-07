@@ -73,7 +73,7 @@ SELECT 4, id FROM sys_permission WHERE code IN ('dashboard', 'analytics:view');
 
 -- Password: admin123 (BCrypt encoded)
 INSERT INTO sys_user (username, password, nickname, email, avatar, bio, status, role_type) VALUES
-  ('admin', '$2a$10$eWdKjVfJxVvZ7xY9yX8wQOeR5tY6uI7oP8aS9dF0gH1jK2lZ3xC4vB5nM6',
+  ('admin', '$2a$10$oOIMKM6qQLu2p7v4lvxI5uGvOg.qwc1rSK75Q7kjmVrHpBF/3omCG',
    'Admin', 'admin@example.com', NULL, 'System administrator', 1, 1)
 ON DUPLICATE KEY UPDATE update_time = CURRENT_TIMESTAMP;
 
@@ -84,7 +84,7 @@ ON DUPLICATE KEY UPDATE update_time = CURRENT_TIMESTAMP;
 
 -- Password: user123 (BCrypt encoded)
 INSERT INTO sys_user (username, password, nickname, email, avatar, bio, status, role_type) VALUES
-  ('testuser', '$2a$10$eWdKjVfJxVvZ7xY9yX8wQOeR5tY6uI7oP8aS9dF0gH1jK2lZ3xC4vB5nM6',
+  ('testuser', '$2a$10$43mjMfu2MddGxP/gU/QaIOaCMDBtNSdqjS0SQYCXBueWOZrfZicba',
    'Test User', 'test@example.com', NULL, 'Regular user', 1, 4)
 ON DUPLICATE KEY UPDATE update_time = CURRENT_TIMESTAMP;
 
